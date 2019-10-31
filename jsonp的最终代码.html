@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <input id="btn01" type="button" value="获取数据" />
+    
+</body>
+</html>
+<script src="js/jquery-3.2.1.min.js"></script>
+<script>
+
+function fn1(str){
+    alert("hi:"+str);
+}
+
+$("#btn01").click(function(){
+    //动态创建script标签
+    let scriptDom = document.createElement("script");
+    // 跨域访问其他电脑的文件
+    scriptDom.src = 'http://192.168.43.149/191027.txt/test.php?callback=fn1';
+    document.body.append(scriptDom);
+    scriptDom.remove();
+});
+
+</script>
+<!-- <script src="http://localhost/xkd/test.php"></script> -->

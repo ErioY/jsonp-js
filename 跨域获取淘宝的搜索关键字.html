@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>淘宝获取数据</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        ul {
+            list-style: none;
+        }
+        form[name="search-form"] {
+            display: block;
+            margin: 10px auto 0;
+            width: 600px;
+            font-size: 0;
+        }
+        input[name="search-content"] {
+            width: 500px;
+            height: 40px;
+            padding: 0 10px;
+            border: 1px solid #ccc;
+            outline: none;
+            box-sizing: border-box;
+            vertical-align: bottom;
+        }
+        input[name="search-content"]:focus {
+            border-color: #3385ff;
+        }
+         input[type="submit"] {
+            width: 100px;
+            height: 40px;
+            border: none;
+            outline: none;
+            color: #fff;
+            background: #3385ff;
+        }
+        #search-list {
+            margin: 0 auto;
+            width: 600px;
+        }
+        #search-list li {
+            padding: 0 10px;
+            line-height: 30px;
+            background: #eee;
+            border-bottom: 1px dashed #ccc;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" id="queryTxt">
+    <input type="button" value="搜索">    
+    <ul id="search-list"></ul>
+    
+</body>
+</html>
+<script src="js/jquery-3.2.1.min.js"></script>
+
+<script>
+//获取淘宝搜索关键字的接口文档
+//1、请求方式：get
+//2、请求地址:https://suggest.taobao.com/sug?code=utf-8&q=' + sVal + '&_ksTS=1515120676355_323&callback=t&area=c2c&bucketid=15; 
+//3、请求参数：
+// q：搜索的关键字
+// callback：回调函数
+//4、返回数据的格式：
+//
+
+    let queryStr = $("#queryTxt");
+    let $ul = $("#search-list");
+
+    queryStr.keyup(function(){
+        let scriptDom = document.createElement("script");
+        scriptDom.src = 'https://suggest.taobao.com/sug?code=utf-8&q=' + this.value + '&_ksTS=1515120676355_323&callback=fn&area=c2c&bucketid=15';
+        document.body.appendChild(scriptDom);
+        scriptDom.remove();
+    });
+
+    function fn(data){
+        // console.log(data);
+        let htmlStr = "";
+        data.result.forEach(item => {
+            htmlStr += `<li>${item[0]}</li>`;
+        });
+        $ul.html(htmlStr);
+    }
+
+</script>
